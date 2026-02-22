@@ -1,16 +1,22 @@
-import type { Metadata } from "next";
+// app/layout.tsx
+// Root layout — wraps every page in Next.js App Router.
+// This is where global styles, fonts, and metadata live.
+
 import "./globals.css";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "My App",
-  description: "My new project",
+  title: "SmartTax Lite",
+  description:
+    "Indian Income Tax Calculator — Old vs New Regime + Expense Splitter",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+interface RootLayoutProps {
+  children: ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body>{children}</body>
