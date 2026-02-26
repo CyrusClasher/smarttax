@@ -1,38 +1,37 @@
 "use client";
-// components/ExpenseSplitter.jsx
-// Self-contained expense splitter tab.
-// Owns its own state (expenses, roommates) — completely independent of tax logic.
-// Calls splitExpenses() from lib — no tax engine imported here.
 
 import { useState } from "react";
-import { Card, SectionTitle, Field, inputStyle, labelStyle } from "@/components/ui";
+import {
+  Card,
+  SectionTitle,
+  Field,
+  inputStyle,
+  labelStyle,
+} from "@/components/ui";
 import { splitExpenses } from "@/lib/expenseSplitter";
 import { fmt } from "@/lib/format";
 
 const DEFAULT_EXPENSES = [
-  { name: "Rent",        amount: 25000 },
-  { name: "Electricity", amount: 2000  },
-  { name: "Internet",    amount: 1200  },
+  { name: "Rent", amount: 25000 },
+  { name: "Electricity", amount: 2000 },
+  { name: "Internet", amount: 1200 },
 ];
 
 export default function ExpenseSplitter() {
-  const [expenses, setExpenses]   = useState(DEFAULT_EXPENSES);
+  const [expenses, setExpenses] = useState(DEFAULT_EXPENSES);
   const [roommates, setRoommates] = useState(3);
 
-  // Run the splitter — pure function call, no side effects
-  const splits         = splitExpenses(expenses, roommates);
-  const grandTotal     = splits.reduce((sum, e) => sum + e.amount, 0);
+  const splits = splitExpenses(expenses, roommates);
+  const grandTotal = splits.reduce((sum, e) => sum + e.amount, 0);
   const perPersonTotal = splits.reduce((sum, e) => sum + e.perPerson, 0);
 
-  // Update a specific field of a specific expense row
   const updateExpense = (index, key, value) =>
     setExpenses((prev) =>
-      prev.map((e, i) => (i === index ? { ...e, [key]: value } : e))
+      prev.map((e, i) => (i === index ? { ...e, [key]: value } : e)),
     );
 
   return (
     <div style={{ display: "grid", gridTemplateColumns: "340px 1fr", gap: 20 }}>
-
       {/* ── Input Panel ── */}
       <Card>
         <SectionTitle accent="#34d399">Shared Expenses</SectionTitle>
@@ -40,7 +39,12 @@ export default function ExpenseSplitter() {
         {expenses.map((e, i) => (
           <div
             key={i}
-            style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12 }}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 8,
+              marginBottom: 12,
+            }}
           >
             <div>
               <label style={labelStyle}>Item</label>
@@ -57,7 +61,9 @@ export default function ExpenseSplitter() {
                 style={inputStyle}
                 type="number"
                 value={e.amount || ""}
-                onChange={(ev) => updateExpense(i, "amount", Number(ev.target.value))}
+                onChange={(ev) =>
+                  updateExpense(i, "amount", Number(ev.target.value))
+                }
                 placeholder="0"
               />
             </div>
@@ -65,7 +71,9 @@ export default function ExpenseSplitter() {
         ))}
 
         <button
-          onClick={() => setExpenses((prev) => [...prev, { name: "", amount: 0 }])}
+          onClick={() =>
+            setExpenses((prev) => [...prev, { name: "", amount: 0 }])
+          }
           style={{
             width: "100%",
             padding: "8px",
@@ -92,7 +100,6 @@ export default function ExpenseSplitter() {
 
       {/* ── Results Panel ── */}
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-
         {/* Summary banner */}
         <div
           style={{
@@ -106,7 +113,14 @@ export default function ExpenseSplitter() {
           }}
         >
           <div>
-            <div style={{ fontSize: 12, color: "#34d399", fontWeight: 700, marginBottom: 4 }}>
+            <div
+              style={{
+                fontSize: 12,
+                color: "#34d399",
+                fontWeight: 700,
+                marginBottom: 4,
+              }}
+            >
               TOTAL SHARED
             </div>
             <div style={{ fontSize: 26, fontWeight: 800, color: "#e2e8f0" }}>
@@ -114,7 +128,14 @@ export default function ExpenseSplitter() {
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 12, color: "#64748b", fontWeight: 700, marginBottom: 4 }}>
+            <div
+              style={{
+                fontSize: 12,
+                color: "#64748b",
+                fontWeight: 700,
+                marginBottom: 4,
+              }}
+            >
               EACH PERSON PAYS
             </div>
             <div style={{ fontSize: 26, fontWeight: 800, color: "#34d399" }}>
@@ -132,10 +153,21 @@ export default function ExpenseSplitter() {
               Add expenses and set roommates to see splits.
             </p>
           ) : (
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                fontSize: 13,
+              }}
+            >
               <thead>
                 <tr>
-                  {["Expense", "Total", `Each (÷${roommates})`, "% of Total"].map((h) => (
+                  {[
+                    "Expense",
+                    "Total",
+                    `Each (÷${roommates})`,
+                    "% of Total",
+                  ].map((h) => (
                     <th
                       key={h}
                       style={{
@@ -155,15 +187,33 @@ export default function ExpenseSplitter() {
               <tbody>
                 {splits.map((e, i) => (
                   <tr key={i} style={{ color: "#94a3b8" }}>
-                    <td style={{ padding: "10px 8px", color: "#e2e8f0", fontWeight: 600 }}>
+                    <td
+                      style={{
+                        padding: "10px 8px",
+                        color: "#e2e8f0",
+                        fontWeight: 600,
+                      }}
+                    >
                       {e.name}
                     </td>
                     <td style={{ padding: "10px 8px" }}>{fmt(e.amount)}</td>
-                    <td style={{ padding: "10px 8px", color: "#34d399", fontWeight: 700 }}>
+                    <td
+                      style={{
+                        padding: "10px 8px",
+                        color: "#34d399",
+                        fontWeight: 700,
+                      }}
+                    >
                       {fmt(e.perPerson)}
                     </td>
                     <td style={{ padding: "10px 8px" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 8,
+                        }}
+                      >
                         <div
                           style={{
                             height: 4,
@@ -181,7 +231,9 @@ export default function ExpenseSplitter() {
                             }}
                           />
                         </div>
-                        <span>{Math.round((e.amount / grandTotal) * 100)}%</span>
+                        <span>
+                          {Math.round((e.amount / grandTotal) * 100)}%
+                        </span>
                       </div>
                     </td>
                   </tr>

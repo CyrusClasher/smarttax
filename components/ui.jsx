@@ -1,8 +1,4 @@
 "use client";
-// components/ui.jsx
-// Reusable primitive components — Field, Card, SectionTitle.
-// Zero business logic. These are purely presentational building blocks.
-// "use client" because they render in the browser (contain DOM elements).
 
 export const inputStyle = {
   width: "100%",
@@ -73,7 +69,14 @@ export function Card({ children, style = {} }) {
  */
 export function SectionTitle({ children, accent = "#6366f1" }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        marginBottom: 20,
+      }}
+    >
       <div
         style={{ width: 3, height: 20, borderRadius: 2, background: accent }}
       />

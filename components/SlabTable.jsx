@@ -1,15 +1,11 @@
 "use client";
-// components/SlabTable.jsx
-// Renders the progressive slab breakdown as a table.
-// Pure display component — receives pre-computed breakdown array, renders rows.
-// Zero logic inside; all computation happens in lib/taxEngine.js.
 
 import { fmt } from "@/lib/format";
 
 const HEADERS = ["Slab Range", "Taxable Amt", "Rate", "Tax"];
 
 /**
- * @param {Array} breakdown - Slab breakdown from calculateProgressiveTax()
+ * @param {Array} breakdown
  */
 export default function SlabTable({ breakdown }) {
   if (!breakdown.length) {
@@ -48,7 +44,12 @@ export default function SlabTable({ breakdown }) {
             <td style={{ padding: "8px" }}>{row.range}</td>
             <td style={{ padding: "8px" }}>{fmt(row.taxable)}</td>
             <td style={{ padding: "8px" }}>{row.rate}%</td>
-            <td style={{ padding: "8px", color: row.tax > 0 ? "#f87171" : "#4ade80" }}>
+            <td
+              style={{
+                padding: "8px",
+                color: row.tax > 0 ? "#f87171" : "#4ade80",
+              }}
+            >
               {fmt(row.tax)}
             </td>
           </tr>

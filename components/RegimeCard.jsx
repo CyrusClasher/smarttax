@@ -1,14 +1,11 @@
 "use client";
-// components/RegimeCard.jsx
-// Displays the tax summary for one regime (old or new).
-// Props-only — no state, pure display. Easy to test in isolation.
 
 import { fmt } from "@/lib/format";
 
 /**
- * @param {string}  label    - "Old Regime" or "New Regime"
- * @param {Object}  result   - Regime result from computeTax()
- * @param {boolean} isWinner - Whether this regime saves more tax
+ * @param {string}  label
+ * @param {Object}  result
+ * @param {boolean} isWinner
  */
 export default function RegimeCard({ label, result, isWinner }) {
   return (
@@ -42,7 +39,14 @@ export default function RegimeCard({ label, result, isWinner }) {
         </div>
       )}
 
-      <div style={{ fontSize: 13, color: "#64748b", marginBottom: 8, fontWeight: 600 }}>
+      <div
+        style={{
+          fontSize: 13,
+          color: "#64748b",
+          marginBottom: 8,
+          fontWeight: 600,
+        }}
+      >
         {label}
       </div>
 
@@ -58,10 +62,22 @@ export default function RegimeCard({ label, result, isWinner }) {
       </div>
 
       <div style={{ fontSize: 12, color: "#475569", lineHeight: 2.2 }}>
-        <div>Taxable Income: <span style={{ color: "#94a3b8" }}>{fmt(result.taxableIncome)}</span></div>
-        <div>Deductions:     <span style={{ color: "#94a3b8" }}>{fmt(result.deductions)}</span></div>
-        <div>Base Tax:       <span style={{ color: "#94a3b8" }}>{fmt(result.baseTax)}</span></div>
-        <div>Cess (4%):      <span style={{ color: "#94a3b8" }}>{fmt(result.cess)}</span></div>
+        <div>
+          Taxable Income:{" "}
+          <span style={{ color: "#94a3b8" }}>{fmt(result.taxableIncome)}</span>
+        </div>
+        <div>
+          Deductions:{" "}
+          <span style={{ color: "#94a3b8" }}>{fmt(result.deductions)}</span>
+        </div>
+        <div>
+          Base Tax:{" "}
+          <span style={{ color: "#94a3b8" }}>{fmt(result.baseTax)}</span>
+        </div>
+        <div>
+          Cess (4%):{" "}
+          <span style={{ color: "#94a3b8" }}>{fmt(result.cess)}</span>
+        </div>
       </div>
     </div>
   );
